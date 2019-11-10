@@ -1,18 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 using Word = Microsoft.Office.Interop.Word;
 using System.Reflection;
+using System.IO;
 
 namespace ReportGenerator
 {
@@ -190,22 +182,9 @@ namespace ReportGenerator
             FillPhotoCount();
             FillWork();
             FillSuperVisor(cmb_supervisor.SelectedIndex);
-
+            SaveToFile();
+            Application.Current.MainWindow.Close();
         }
-
-        private void FillPhotoCount()
-        {
-            throw new NotImplementedException();
-        }
-
-        private void FillSuperVisor(int index)
-        {            
-            Word.Bookmark bookmark = word.FindByBookMark(BookmarksName.PositionBookMark());
-            
-            bookmark.Range.Text = GetSupervisorByIndex(index);
-        }
-       
-
         private void FillDate()
         {
             DateTime date = DateTime.Now;
@@ -214,6 +193,52 @@ namespace ReportGenerator
             Word.Bookmark bookmark = word.FindByBookMark(BookmarksName.DateBookMark());
             bookmark.Range.Text = curDate;
         }
+
+        private void SaveToFile()
+        {
+            // Название файла
+            String folderName = "Чистый четверг - " + DateTime.Now.ToString("yyyy_MM_dd");
+            
+            // путь для сохранения
+            String newFolderPath = Environment.CurrentDirectory;    // текущй каталог exe файла
+            newFolderPath = Path.Combine(newFolderPath, @"..\");    // поднятся на уровень выше
+            newFolderPath = Path.Combine(newFolderPath, folderName);
+
+
+            System.IO.Directory.CreateDirectory(newFolderPath);
+
+            String fileName = "Сопроводиловка на адм.ЦГР";
+            String fileExtension = ".doc";
+            String fullPath = Path.Combine(newFolderPath, fileName + fileExtension);
+            try
+            {
+                word._application.ActiveDocument.SaveAs2(
+                    FileName:fullPath, 
+                    FileFormat: Word.WdSaveFormat.wdFormatDocument
+                    );
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Сохранить файл не удалось.\n" + ex.Message);
+            }
+            
+        }
+
+        private void FillPhotoCount()
+        {
+            Word.Bookmark bookmark = word.FindByBookMark(BookmarksName.PhotoCountBookMark());
+            bookmark.Range.Text = tb_photoCount.Text + " " + Utils.GetDeclensionFiles(int.Parse(tb_photoCount.Text));
+        }
+
+        private void FillSuperVisor(int index)
+        {
+            Word.Bookmark bookmark = word.FindByBookMark(BookmarksName.PositionBookMark());
+
+            bookmark.Range.Text = GetSupervisorByIndex(index);
+        }
+
+
+        
         private void FillWork()
         {
             String works = CreateListWorks();
@@ -320,6 +345,6 @@ namespace ReportGenerator
         {
 
         }
-        
+
     }
 }

@@ -39,15 +39,7 @@ namespace ReportGenerator
             }
             _application.Visible = true;
 
-        }
-
-        public void Dispose()
-        {
-            _document.Close(ref _falseObj, ref _missingObj, ref _missingObj);
-            _application.Quit(ref _missingObj, ref _missingObj, ref _missingObj);
-            _document = null;
-            _application = null;
-        }
+        }        
 
         public void FindAndReplace(String strToFind, String replaceStr)
         {
@@ -100,17 +92,25 @@ namespace ReportGenerator
             throw new ArgumentException("Закладка не найдена");
         }
 
-        internal Word.ListTemplate CreateListTemplate()
+        public void Dispose()
+        {
+            _document.Close(ref _falseObj, ref _missingObj, ref _missingObj);
+            _application.Quit(ref _missingObj, ref _missingObj, ref _missingObj);
+            _document = null;
+            _application = null;
+        }
+
+        public Word.ListTemplate CreateListTemplate()
         {
             // выбор маркера для списка
             Word._Application app = _application;
             Word.ListGallery gallery = app.ListGalleries[Word.WdListGalleryType.wdBulletGallery];
-            Word.ListTemplate myPreferredListTemplate = gallery.ListTemplates[1];
-            Word.ListLevel listLevel = myPreferredListTemplate.ListLevels[1];
-            listLevel.NumberFormat = "-";
-            listLevel.TrailingCharacter = Word.WdTrailingCharacter.wdTrailingTab;
-            listLevel.NumberStyle = Word.WdListNumberStyle.wdListNumberStyleBullet;            
-            listLevel.Alignment = Word.WdListLevelAlignment.wdListLevelAlignLeft;
+            Word.ListTemplate myPreferredListTemplate = gallery.ListTemplates[1];// номер семейства маркеров?(тире или что-то другое)
+            Word.ListLevel listLevel = myPreferredListTemplate.ListLevels[1]; //Номер семейства(чего?) только 1 работает.
+            listLevel.NumberFormat = "-";// символ для маркера
+            listLevel.TrailingCharacter = Word.WdTrailingCharacter.wdTrailingSpace;  // После маркера пробел.(табуляция или слитно)
+            listLevel.NumberStyle = Word.WdListNumberStyle.wdListNumberStyleBullet;  // wdListNumberStyleBullet для маркированного списка        
+            listLevel.Alignment = Word.WdListLevelAlignment.wdListLevelAlignRight;   // выравнивание?.
             listLevel.NumberPosition = 0; 
             listLevel.TextPosition = 0;
             listLevel.StartAt = 1;            
@@ -118,7 +118,7 @@ namespace ReportGenerator
             return myPreferredListTemplate;
         }
 
-        internal Word.ParagraphFormat CreateParagraphTemplate(Word.Range range)
+        public Word.ParagraphFormat CreateParagraphTemplate(Word.Range range)
         {
             Word.ParagraphFormat paragraphFormat = range.ParagraphFormat;
 

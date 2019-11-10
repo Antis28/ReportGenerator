@@ -47,6 +47,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="BookmarksName.cs" />
+    <Compile Include="Report.cs" />
+    <Compile Include="Utils.cs" />
     <Compile Include="WorkWithWord.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
