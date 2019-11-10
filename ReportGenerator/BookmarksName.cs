@@ -6,10 +6,10 @@ namespace ReportGenerator
 {
     class BookmarksName
     {
-        static readonly String date = "Date";
-        static readonly String photoCount = "PhotoCount";
-        static readonly String position = "Position";
-        static readonly String work = "Work";
+        const String date = "Date";
+        const String photoCount = "PhotoCount";
+        const String position = "Position";
+        const String work = "Work";
 
         String bookmark = "Не определено";
 
@@ -22,7 +22,7 @@ namespace ReportGenerator
         public static BookmarksName PhotoCountBookMark() => new BookmarksName(photoCount);
         public static BookmarksName PositionBookMark() => new BookmarksName(position);
         public static BookmarksName WorkBookMark() => new BookmarksName(work);
-        
+
 
         public override string ToString()
         {

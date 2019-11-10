@@ -13,7 +13,6 @@ namespace ReportGenerator
         Word._Document _document;
 
         Object _missingObj = System.Reflection.Missing.Value;
-        Object _trueObj = true;
         Object _falseObj = false;
 
 
