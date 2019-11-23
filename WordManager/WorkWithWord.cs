@@ -7,7 +7,7 @@ using System.Reflection;
 
 namespace WordManager
 {
-    public class WorkWithWord: IDisposable
+    public class WorkWithWord : IDisposable
     {
         public Word._Application _application;
         Word._Document _document;
@@ -16,7 +16,7 @@ namespace WordManager
         Object _falseObj = false;
 
 
-        public void CreateNewDoc(String path)
+        public void CreateNewDoc(String path, AppVisibility visibility)
         {
             //создаем обьект приложения word
             _application = new Word.Application();
@@ -36,10 +36,18 @@ namespace WordManager
                 _application = null;
                 throw error;
             }
-            // делаем word видимым
-            _application.Visible = false;
+            if (visibility == AppVisibility.Visible)
+            {
+                // делаем word видимым
+                _application.Visible = true;
+            }
+            else
+            {
+                _application.Visible = false;
+            }
+            
 
-        }        
+        }
 
         public void FindAndReplace(String strToFind, String replaceStr)
         {
@@ -109,9 +117,9 @@ namespace WordManager
             listLevel.TrailingCharacter = Word.WdTrailingCharacter.wdTrailingSpace;  // После маркера пробел.(табуляция или слитно)
             listLevel.NumberStyle = Word.WdListNumberStyle.wdListNumberStyleBullet;  // wdListNumberStyleBullet для маркированного списка        
             listLevel.Alignment = Word.WdListLevelAlignment.wdListLevelAlignRight;   // выравнивание?.
-            listLevel.NumberPosition = 0; 
+            listLevel.NumberPosition = 0;
             listLevel.TextPosition = 0;
-            listLevel.StartAt = 1;            
+            listLevel.StartAt = 1;
 
             return myPreferredListTemplate;
         }
@@ -122,7 +130,7 @@ namespace WordManager
 
             paragraphFormat.LeftIndent = _application.CentimetersToPoints(0);
             // отсуп первой строки
-            paragraphFormat.FirstLineIndent =_application.CentimetersToPoints(1.27f);
+            paragraphFormat.FirstLineIndent = _application.CentimetersToPoints(1.27f);
             return paragraphFormat;
         }
     }

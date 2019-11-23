@@ -8,6 +8,8 @@ using System.Reflection;
 using System.IO;
 using System.Globalization;
 using Reports;
+using WordManager;
+using Utils;
 
 namespace ReportGenerator
 {
@@ -27,7 +29,7 @@ namespace ReportGenerator
         private void textBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             char ch = e.Text[0];
-            if (!Char.IsDigit(ch) && ch != 8) e.Handled = true;
+            if (InputFilter.CheckDigit(ch)) e.Handled = true;
         }
 
         private void FormDocument_click(object sender, RoutedEventArgs e)
@@ -40,11 +42,21 @@ namespace ReportGenerator
             int photoCount = int.Parse(tb_photoCount.Text, CultureInfo.CurrentCulture);
             String supervisor = GetSupervisorByIndex(cmb_supervisor.SelectedIndex);
             String works = CombineListWorks();
-            var report = new ReportThursday();
-            
+            ReportThursday report = null;
+
+            if (cb_WordVisible.IsChecked.Value)
+            {
+                report = new ReportThursday(AppVisibility.Visible);                
+            }
+            else
+            {
+                report = new ReportThursday(AppVisibility.Hide);
+            }
+
+
             try
             {
-                 report.GenerateThursday(works, supervisor, photoCount);
+                report.GenerateThursday(works, supervisor, photoCount);
             }
             catch (FileLoadException ex)
             {
@@ -54,9 +66,22 @@ namespace ReportGenerator
             {
                 MessageBox.Show(ex.Message);
             }
-            finally { report.Dispose(); }
-            MessageBox.Show("Работа генератора завершена");
-            //Application.Current.MainWindow.Close();
+            finally
+            {
+                if (!cb_WordVisible.IsChecked.Value)
+                {
+                    report.Dispose();
+                }
+            }
+            if (cb_CloseByEnd.IsChecked.Value)
+            {
+                Application.Current.MainWindow.Close();
+            }
+
+            /*
+            else
+                MessageBox.Show("Работа генератора завершена");
+                */
         }
 
         private static String GetSupervisorByIndex(int index)

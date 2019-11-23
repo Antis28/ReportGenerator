@@ -19,11 +19,11 @@ namespace Reports
         readonly String cleanThursdayPath = Environment.CurrentDirectory + @"\Template\отчет #Чистый четверг#.dot";
         readonly WorkWithWord word = null;
 
-        public ReportThursday()
+        public ReportThursday(AppVisibility visibility)
         {
             word = new WorkWithWord();
             if (File.Exists(cleanThursdayPath))
-                word.CreateNewDoc(cleanThursdayPath);
+                word.CreateNewDoc(cleanThursdayPath, visibility);
             else
                 throw new FileLoadException("Шаблон не найден по адресу: " + cleanThursdayPath);
         }
@@ -88,9 +88,6 @@ namespace Reports
                 FileFormat: Word.WdSaveFormat.wdFormatDocument
                 );
         }
-
-
-
         public void Dispose()
         {
             word.Dispose();

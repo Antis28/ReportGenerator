@@ -129,6 +129,10 @@
       <Project>{49969cfd-d740-424d-885d-7ab2b74c7310}</Project>
       <Name>Utils</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WordManager\WordManager.csproj">
+      <Project>{77e8804e-4859-4c17-99f4-3a187eea7f59}</Project>
+      <Name>WordManager</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="report-icon-13319-Windows.ico" />
