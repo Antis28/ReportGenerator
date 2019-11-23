@@ -18,11 +18,6 @@ namespace GraphicGuards
             DateTime firstDay = new DateTime(now.Year, now.Month, 1);
             DateTime last = firstDay.AddMonths(1).AddDays(-1);
 
-            //Case1(guard11, guard22, guard33, firstDay, last);
-            //Case2(guard11, guard22, guard33, firstDay);
-
-
-
             Case3(guard11, guard22, guard33, firstDay, last);
             WriteLine(new string('-', 100));
 
@@ -36,7 +31,7 @@ namespace GraphicGuards
             Case3(guard11, guard22, guard33, firstDay, last);
         }
 
-        private static void Case3(string guard11, string guard22, string guard33, DateTime firstDay, DateTime last)
+        private static void PrintHeader(string guard11, DateTime firstDay, DateTime last)
         {
             WriteLine(new string('-', 100));
             Write(new string(' ', 50));
@@ -54,22 +49,30 @@ namespace GraphicGuards
                 Write(currentDay.ToString("ddd") + " ");
             }
             WriteLine();
-            WriteLine(new string('-', 100));
-            Write(guard11 + "-");
-            Write(new string(' ', 1));
+        }
+
+        private static void Case3(string guard11, string guard22, string guard33, DateTime firstDay, DateTime last)
+        {
+            PrintHeader(guard11, firstDay, last);
+            PrintGuardName(guard11);
             PrintGuard(firstDay);
-            WriteLine();
 
-            Write(guard22 + "-");
-            Write(new string(' ', 4));
+
+            PrintGuardName(guard22);
             PrintGuard(firstDay.AddDays(1));
-            WriteLine();
 
-            Write(guard33 + "-");
-            Write(new string(' ', 1));
+
+            PrintGuardName(guard33);
             PrintGuard(firstDay.AddDays(2));
-            WriteLine();
+
             ReadLine();
+        }
+
+        private static void PrintGuardName(string guard)
+        {
+            WriteLine(new string('-', 100));
+            Write(guard + "-");
+            Write(new string(' ', 1));
         }
 
         private static void PrintGuard(DateTime firstDay)
@@ -87,98 +90,8 @@ namespace GraphicGuards
                     Write(new string(' ', 2));
             }
             ResetColor();
+            WriteLine();
         }
-
-
-
-        private static void Case2(string guard11, string guard22, string guard33, DateTime firstDay)
-        {
-            Guard guard1 = new Guard(firstDay);
-            Dictionary<DateTime, int> duty1 = guard1.GetDuty();
-
-            foreach (var item in duty1)
-            {
-                WriteLine(guard11 + " дежурит " + item.Value + " часов " + item.Key.ToString("d ddd MMMM"));
-            }
-            ReadLine();
-            WriteLine(new string('-', 50));
-
-            Guard guard2 = new Guard(firstDay.AddDays(1));
-            Dictionary<DateTime, int> duty2 = guard2.GetDuty();
-
-            foreach (var item in duty2)
-            {
-                WriteLine(guard22 + " дежурит " + item.Value + " часов " + item.Key.ToString("d ddd MMMM"));
-            }
-            ReadLine();
-            WriteLine(new string('-', 50));
-
-            Guard guard3 = new Guard(firstDay.AddDays(2));
-            Dictionary<DateTime, int> duty3 = guard3.GetDuty();
-
-            foreach (var item in duty3)
-            {
-                WriteLine(guard33 + " дежурит " + item.Value + " часов " + item.Key.ToString("d ddd MMMM"));
-            }
-            ReadLine();
-        }
-
-        private static void Case1(string guard11, string guard22, string guard33, DateTime firstDay, DateTime last)
-        {
-            // Удалить, уже есть в классе Guard
-            int HourDuty(DateTime date)
-            {
-                int weekday = 7;
-                int beforeWeekend = 8;
-                int weekend = 16;
-
-                DayOfWeek day = date.DayOfWeek;
-                switch (day)
-                {
-                    case DayOfWeek.Sunday:
-                        return weekend;
-                    case DayOfWeek.Monday:
-                    case DayOfWeek.Tuesday:
-                    case DayOfWeek.Wednesday:
-                    case DayOfWeek.Thursday:
-                        return weekday;
-                    case DayOfWeek.Friday:
-                    case DayOfWeek.Saturday:
-                        return beforeWeekend;
-                }
-                return 0;
-            }
-
-            for (DateTime currentDay = firstDay; currentDay < last;)
-            {
-                if (currentDay.Day > last.Day)
-                {
-                    break;
-                }
-                int duty = HourDuty(currentDay);
-                WriteLine(guard11 + " дежурит " + duty + " часов " + currentDay.ToString("d ddd MMMM"));
-                currentDay = currentDay.AddDays(1);
-
-                if (currentDay.Day > last.Day)
-                {
-                    break;
-                }
-                duty = HourDuty(currentDay);
-                WriteLine(guard22 + " дежурит " + duty + " часов " + currentDay.ToString("d ddd MMMM"));
-                currentDay = currentDay.AddDays(1);
-
-                if (currentDay.Day > last.Day)
-                {
-                    break;
-                }
-                duty = HourDuty(currentDay);
-                WriteLine(guard33 + " дежурит " + duty + " часов " + currentDay.ToString("d ddd MMMM"));
-                currentDay = currentDay.AddDays(1);
-
-                WriteLine(new string('-', 50));
-            }
-        }
-
         private static void ConsoleColor(int item)
         {
             if (item == 7)
@@ -201,76 +114,6 @@ namespace GraphicGuards
         private static void ResetColor()
         {
             Console.ForegroundColor = System.ConsoleColor.Gray; // устанавливаем цвет
-        }
-    }
-    class Guard
-    {
-        private readonly Dictionary<DateTime, int> duties = new Dictionary<DateTime, int>(15);
-
-        public Guard(DateTime firstDuty)
-        {
-            DateTime nextMonths = firstDuty.AddMonths(1);
-            DateTime lastDay = new DateTime(nextMonths.Year, nextMonths.Month, 1).AddDays(-1);
-            CheckContinueDuty(firstDuty);
-            int hourContinueDuty = 8;
-            int dayOff = 0;
-
-            for (DateTime currentDay = firstDuty; currentDay <= lastDay; currentDay = currentDay.AddDays(1))
-            {
-                duties.Add(currentDay, HourDuty(currentDay));
-
-                currentDay = currentDay.AddDays(1);
-                if (currentDay > lastDay)
-                    break;
-
-                duties.Add(currentDay, hourContinueDuty);
-
-                currentDay = currentDay.AddDays(1);
-                if (currentDay > lastDay)
-                    break;
-
-                duties.Add(currentDay, dayOff);
-            }
-        }
-        // Дежурство с прошлого месяца
-        private void CheckContinueDuty(DateTime firstDuty)
-        {
-            int hourContinueDuty = 8;
-            int dayOff = 0;
-            int dateForContinueDuty = 3;
-            if (firstDuty.Day == dateForContinueDuty)
-            {
-                DateTime firstDay = new DateTime(firstDuty.Year, firstDuty.Month, 1);
-                duties.Add(firstDay, hourContinueDuty);
-                duties.Add(firstDay.AddDays(1), dayOff);
-            }
-        }
-
-        public Dictionary<DateTime, int> GetDuty()
-        {
-            return duties;
-        }
-        int HourDuty(DateTime date)
-        {
-            int weekday = 7;
-            int beforeWeekend = 8;
-            int weekend = 16;
-
-            DayOfWeek day = date.DayOfWeek;
-            switch (day)
-            {
-                case DayOfWeek.Sunday:
-                    return weekend;
-                case DayOfWeek.Monday:
-                case DayOfWeek.Tuesday:
-                case DayOfWeek.Wednesday:
-                case DayOfWeek.Thursday:
-                    return weekday;
-                case DayOfWeek.Friday:
-                case DayOfWeek.Saturday:
-                    return beforeWeekend;
-            }
-            return 0;
         }
     }
 }
