@@ -19,8 +19,20 @@ namespace GraphicGuards
             DateTime firstDay = new DateTime(now.Year, now.Month, 1);
             DateTime last = firstDay.AddMonths(1).AddDays(-1);
 
-            Case4(guard11, guard22, guard33, firstDay, last);
+            //Case4(guard11, guard22, guard33, firstDay, last);
+
             
+            int guardNameLength = guard11.Length + 1;
+
+            PrintHeader(guardNameLength, firstDay, last);            
+
+            GuardManager manager = new GuardManager(now);
+            manager.SetGurdContinueDuty(3);
+            manager.PlanGraphic();
+            manager.PrintGraphic();
+
+            Wait();
+
 
             /*
             firstDay = new DateTime(firstDay.Year, firstDay.AddMonths(1).Month, 1);
@@ -62,6 +74,5 @@ namespace GraphicGuards
             Wait();
         }
 
-        
     }
 }
