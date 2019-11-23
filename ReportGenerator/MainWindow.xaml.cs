@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Input;
+using System.Threading;
 
 using Word = Microsoft.Office.Interop.Word;
 using System.Reflection;
 using System.IO;
 using System.Globalization;
+using Reports;
 
 namespace ReportGenerator
 {
@@ -30,30 +32,31 @@ namespace ReportGenerator
 
         private void FormDocument_click(object sender, RoutedEventArgs e)
         {
-            
+            GenThur();
+        }
+
+        private void GenThur()
+        {
             int photoCount = int.Parse(tb_photoCount.Text, CultureInfo.CurrentCulture);
             String supervisor = GetSupervisorByIndex(cmb_supervisor.SelectedIndex);
             String works = CombineListWorks();
-
+            var report = new ReportThursday();
+            
             try
             {
-                using (var report = new Report())
-                {
-                    report.FillDate();
-                    report.FillPhotoCount(photoCount);
-                    report.FillWork(works);
-                    report.FillSuperVisor(supervisor);
-                    report.SaveToFile();
-
-                }
+                 report.GenerateThursday(works, supervisor, photoCount);
+            }
+            catch (FileLoadException ex)
+            {
+                MessageBox.Show(ex.Message);
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
-
+            finally { report.Dispose(); }
+            MessageBox.Show("Работа генератора завершена");
             //Application.Current.MainWindow.Close();
-           
         }
 
         private static String GetSupervisorByIndex(int index)

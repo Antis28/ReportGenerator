@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ReportGenerator
+namespace Utilities
 {
-    static class Utils
+    public static class WordEnds
     {
         /// <summary>
         /// 'Возвращает слова в падеже, зависимом от заданного числа

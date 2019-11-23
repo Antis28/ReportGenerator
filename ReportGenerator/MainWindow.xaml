@@ -16,7 +16,7 @@
             <RowDefinition Height="101*"/>
             <RowDefinition Height="149*"/>
         </Grid.RowDefinitions>
-        
+
         <Button x:Name="btn_formDocument" Content="Заполнить" HorizontalAlignment="Left" Margin="79.07,18,0,0" VerticalAlignment="Top" Width="177.591" Click="FormDocument_click" Grid.Column="1" Height="44" FontSize="20"/>
         <CheckBox x:Name="cb_lightGarbageCollection" Content="уборка легкого мусора" HorizontalAlignment="Left" Margin="12.661,28.123,0,0" VerticalAlignment="Top" FontSize="16" IsChecked="True" Grid.Row="2" Grid.Column="1" IsEnabled="False"/>
         <CheckBox x:Name="cb_sweepingPavements" Content="подметание тротуаров" HorizontalAlignment="Left" Margin="12.661,79.897,0,0" VerticalAlignment="Top" FontSize="16" Grid.Row="1" Grid.Column="1"/>
@@ -35,6 +35,7 @@
             <ComboBoxItem Content="Начальник управления"/>
             <ComboBoxItem Content="И.о. начальника"/>
         </ComboBox>
+        <ProgressBar HorizontalAlignment="Left" Height="8" Margin="67,3,0,0" VerticalAlignment="Top" Width="419.661" Grid.ColumnSpan="2"/>
 
     </Grid>
 </Window>

@@ -5,9 +5,9 @@ using Word = Microsoft.Office.Interop.Word;
 using System.Reflection;
 
 
-namespace ReportGenerator
+namespace WordManager
 {
-    class WorkWithWord: IDisposable
+    public class WorkWithWord: IDisposable
     {
         public Word._Application _application;
         Word._Document _document;
@@ -36,7 +36,8 @@ namespace ReportGenerator
                 _application = null;
                 throw error;
             }
-            _application.Visible = true;
+            // делаем word видимым
+            _application.Visible = false;
 
         }        
 
@@ -76,16 +77,14 @@ namespace ReportGenerator
 
         }
 
-        public Word.Bookmark FindByBookMark(BookmarksName bookmarkName)
+        public Word.Bookmark FindBookMark(String bookmarkName)
         {
-            // обьектные строки для Word            
-            object bookmarkNameObj = bookmarkName.ToString();
-            
-            Word.Bookmark bookmark;
-
-            if (_document.Bookmarks.Exists(bookmarkNameObj.ToString()))
+            if (_document.Bookmarks.Exists(bookmarkName))
             {
-                bookmark = _document.Bookmarks.get_Item(ref bookmarkNameObj);
+                // обьектные строки для Word            
+                object bookmarkNameObj = bookmarkName;
+
+                Word.Bookmark bookmark = _document.Bookmarks.get_Item(ref bookmarkNameObj);
                 return bookmark;
             }
             throw new ArgumentException("Закладка не найдена");
@@ -126,8 +125,5 @@ namespace ReportGenerator
             paragraphFormat.FirstLineIndent =_application.CentimetersToPoints(1.27f);
             return paragraphFormat;
         }
-
-
-
     }
 }
