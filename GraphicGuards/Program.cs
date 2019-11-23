@@ -16,7 +16,7 @@ namespace GraphicGuards
 
             DateTime now = DateTime.Now;
             DateTime firstDay = new DateTime(now.Year, now.Month, 1);
-            DateTime last = new DateTime(now.Year, now.Month + 1, 1).AddDays(-1);
+            DateTime last = firstDay.AddMonths(1).AddDays(-1);
 
             //Case1(guard11, guard22, guard33, firstDay, last);
             //Case2(guard11, guard22, guard33, firstDay);
@@ -24,19 +24,32 @@ namespace GraphicGuards
 
 
             Case3(guard11, guard22, guard33, firstDay, last);
+            WriteLine(new string('-', 100));
+
+
+            firstDay = new DateTime(firstDay.Year, firstDay.AddMonths(1).Month, 1);
+            last = firstDay.AddMonths(1).AddDays(-1);
+            Case3(guard11, guard22, guard33, firstDay, last);
+
+            firstDay = new DateTime(firstDay.Year, firstDay.Month, 1).AddMonths(1);
+            last = firstDay.AddMonths(1).AddDays(-1);
+            Case3(guard11, guard22, guard33, firstDay, last);
         }
 
         private static void Case3(string guard11, string guard22, string guard33, DateTime firstDay, DateTime last)
         {
             WriteLine(new string('-', 100));
+            Write(new string(' ', 50));
+            WriteLine(firstDay.ToString("MMMM"));
+            WriteLine(new string('-', 100));
             Write(new string('-', guard11.Length + 1));
-            for (DateTime currentDay = firstDay; currentDay < last.AddDays(1); currentDay = currentDay.AddDays(1))
+            for (DateTime currentDay = firstDay; currentDay <= last; currentDay = currentDay.AddDays(1))
             {
                 Write(currentDay.ToString("dd") + " ");
             }
             WriteLine();
             Write(new string('-', guard11.Length + 1));
-            for (DateTime currentDay = firstDay; currentDay < last.AddDays(1); currentDay = currentDay.AddDays(1))
+            for (DateTime currentDay = firstDay; currentDay <= last; currentDay = currentDay.AddDays(1))
             {
                 Write(currentDay.ToString("ddd") + " ");
             }
@@ -45,17 +58,18 @@ namespace GraphicGuards
             Write(guard11 + "-");
             Write(new string(' ', 1));
             PrintGuard(firstDay);
-
+            WriteLine();
 
             Write(guard22 + "-");
             Write(new string(' ', 4));
             PrintGuard(firstDay.AddDays(1));
+            WriteLine();
 
             Write(guard33 + "-");
             Write(new string(' ', 1));
             PrintGuard(firstDay.AddDays(2));
-
-            ReadKey();
+            WriteLine();
+            ReadLine();
         }
 
         private static void PrintGuard(DateTime firstDay)
@@ -75,7 +89,7 @@ namespace GraphicGuards
             ResetColor();
         }
 
-        
+
 
         private static void Case2(string guard11, string guard22, string guard33, DateTime firstDay)
         {
@@ -134,7 +148,7 @@ namespace GraphicGuards
                 }
                 return 0;
             }
-            
+
             for (DateTime currentDay = firstDay; currentDay < last;)
             {
                 if (currentDay.Day > last.Day)
@@ -195,23 +209,24 @@ namespace GraphicGuards
 
         public Guard(DateTime firstDuty)
         {
-            DateTime last = new DateTime(firstDuty.Year, firstDuty.Month + 1, 1);
+            DateTime nextMonths = firstDuty.AddMonths(1);
+            DateTime lastDay = new DateTime(nextMonths.Year, nextMonths.Month, 1).AddDays(-1);
             CheckContinueDuty(firstDuty);
             int hourContinueDuty = 8;
             int dayOff = 0;
 
-            for (DateTime currentDay = firstDuty; currentDay < last; currentDay = currentDay.AddDays(1))
+            for (DateTime currentDay = firstDuty; currentDay <= lastDay; currentDay = currentDay.AddDays(1))
             {
                 duties.Add(currentDay, HourDuty(currentDay));
 
                 currentDay = currentDay.AddDays(1);
-                if (currentDay >= last)
+                if (currentDay > lastDay)
                     break;
 
                 duties.Add(currentDay, hourContinueDuty);
 
                 currentDay = currentDay.AddDays(1);
-                if (currentDay >= last)
+                if (currentDay > lastDay)
                     break;
 
                 duties.Add(currentDay, dayOff);
