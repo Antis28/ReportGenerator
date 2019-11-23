@@ -8,19 +8,19 @@ namespace GraphicGuards
 {
     class ConsoleMenager
     {
-        public static void PrintHeader(string guard11, DateTime firstDay, DateTime last)
+        public static void PrintHeader(int guardNameLength, DateTime firstDay, DateTime last)
         {
             WriteLine(new string('-', 100));
             Write(new string(' ', 50));
             WriteLine(firstDay.ToString("MMMM"));
             WriteLine(new string('-', 100));
-            Write(new string('-', guard11.Length + 1));
+            Write(new string('-', guardNameLength));
             for (DateTime currentDay = firstDay; currentDay <= last; currentDay = currentDay.AddDays(1))
             {
                 Write(currentDay.ToString("dd") + " ");
             }
             WriteLine();
-            Write(new string('-', guard11.Length + 1));
+            Write(new string('-', guardNameLength));
             for (DateTime currentDay = firstDay; currentDay <= last; currentDay = currentDay.AddDays(1))
             {
                 Write(currentDay.ToString("ddd") + " ");
@@ -33,10 +33,8 @@ namespace GraphicGuards
             Write(guard + "-");
             Write(new string(' ', 1));
         }
-        public static void PrintGuard(DateTime firstDay)
+        public static void PrintGuardDuty(Dictionary<DateTime, int> duty)
         {
-            Guard guard = new Guard(firstDay);
-            Dictionary<DateTime, int> duty = guard.GetDuty();
             foreach (var item in duty)
             {
                 ConsoleSetColor(item.Value);
