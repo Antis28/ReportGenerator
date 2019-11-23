@@ -19,10 +19,10 @@ namespace GraphicGuards
             DateTime firstDay = new DateTime(now.Year, now.Month, 1);
             DateTime last = firstDay.AddMonths(1).AddDays(-1);
 
-            Case3(guard11, guard22, guard33, firstDay, last);
+            Case4(guard11, guard22, guard33, firstDay, last);
             
 
-
+            /*
             firstDay = new DateTime(firstDay.Year, firstDay.AddMonths(1).Month, 1);
             last = firstDay.AddMonths(1).AddDays(-1);
             Case3(guard11, guard22, guard33, firstDay, last);
@@ -30,23 +30,34 @@ namespace GraphicGuards
             firstDay = new DateTime(firstDay.Year, firstDay.Month, 1).AddMonths(1);
             last = firstDay.AddMonths(1).AddDays(-1);
             Case3(guard11, guard22, guard33, firstDay, last);
+            */
         }
 
         
 
-        private static void Case3(string guard11, string guard22, string guard33, DateTime firstDay, DateTime last)
+        private static void Case4(string guard11, string guard22, string guard33, DateTime firstDay, DateTime last)
         {
-            PrintHeader(guard11, firstDay, last);
+            Dictionary<DateTime, int> duty;
+            Guard guard = null;
+
+            int guardNameLength = guard11.Length + 1;
+            
+            PrintHeader(guardNameLength, firstDay, last);
             PrintGuardName(guard11);
-            PrintGuard(firstDay);
+            guard = new Guard(firstDay);
+            guard.Print();
 
 
             PrintGuardName(guard22);
-            PrintGuard(firstDay.AddDays(1));
+            guard = new Guard(firstDay.AddDays(1));
+            duty = guard.GetDuty();
+            PrintGuardDuty(duty);
 
 
             PrintGuardName(guard33);
-            PrintGuard(firstDay.AddDays(2));
+            guard = new Guard(firstDay.AddDays(2));
+            duty = guard.GetDuty();
+            PrintGuardDuty(duty);
 
             Wait();
         }

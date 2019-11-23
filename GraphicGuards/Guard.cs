@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using static GraphicGuards.ConsoleMenager;
 
 namespace GraphicGuards
 {
@@ -9,13 +10,24 @@ namespace GraphicGuards
     {
         private readonly Dictionary<DateTime, int> duties = new Dictionary<DateTime, int>(15);
 
-        public Guard(DateTime firstDuty)
+        public Guard(DateTime firstDuty, bool continueDuty = false)
         {
-            DateTime nextMonths = firstDuty.AddMonths(1);
-            DateTime lastDay = new DateTime(nextMonths.Year, nextMonths.Month, 1).AddDays(-1);
-            
             int hourContinueDuty = 8;
             int dayOff = 0;
+
+            DateTime nextMonths = firstDuty.AddMonths(1);
+            DateTime firstDay = new DateTime(firstDuty.Year, firstDuty.Month, 1);
+            DateTime lastDay = new DateTime(nextMonths.Year, nextMonths.Month, 1).AddDays(-1);
+
+            if (continueDuty || firstDuty.Day > 2)
+            {
+                duties.Add(firstDay, hourContinueDuty);
+                duties.Add(firstDay.AddDays(1), dayOff);
+            }
+            else if (firstDuty.Day == 2)
+            {
+                duties.Add(firstDay, dayOff);
+            }
 
             for (DateTime currentDay = firstDuty; currentDay <= lastDay; currentDay = currentDay.AddDays(1))
             {
@@ -34,6 +46,15 @@ namespace GraphicGuards
                 duties.Add(currentDay, dayOff);
             }
         }
+
+        public void Print()
+        {
+            PrintGuardDuty(duties);
+        }
+        public Dictionary<DateTime, int> GetDuty()
+        {
+            return duties;
+        }
         // Дежурство с прошлого месяца
         private void CheckContinueDuty(DateTime firstDuty)
         {
@@ -46,11 +67,6 @@ namespace GraphicGuards
                 duties.Add(firstDay, hourContinueDuty);
                 duties.Add(firstDay.AddDays(1), dayOff);
             }
-        }
-
-        public Dictionary<DateTime, int> GetDuty()
-        {
-            return duties;
         }
         int HourDuty(DateTime date)
         {
