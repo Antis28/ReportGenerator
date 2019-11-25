@@ -98,6 +98,11 @@ namespace WordManager
             throw new ArgumentException("Закладка не найдена");
         }
 
+        public Word.Range MoveCellRight()
+        {
+           return MoveInTable.MoveRight(_application);
+        }
+
         public void Dispose()
         {
             _document.Close(ref _falseObj, ref _missingObj, ref _missingObj);

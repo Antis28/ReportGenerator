@@ -40,7 +40,7 @@ namespace ReportGenerator
         private void GenThur()
         {
             int photoCount = int.Parse(tb_photoCount.Text, CultureInfo.CurrentCulture);
-            String supervisor = GetSupervisorByIndex(cmb_supervisor.SelectedIndex);
+            String supervisor = Helpers.GetSupervisorFull(cmb_supervisor.SelectedIndex);
             String works = CombineListWorks();
             ReportThursday report = null;
 
@@ -84,22 +84,7 @@ namespace ReportGenerator
                 */
         }
 
-        private static String GetSupervisorByIndex(int index)
-        {
-            String position = String.Empty;
-            switch (index)
-            {
-                case 0:
-                    position = "Начальник управления" + new String(' ', 70) + "М.В. Городкова";
-                    break;
-                case 1:
-                    position = "И.о. начальника управления" + new String(' ', 70) + "Т.Н. Хомич";
-                    break;
-                default:
-                    break;
-            }
-            return position;
-        }
+        
         private string CombineListWorks()
         {
             String work = String.Empty;

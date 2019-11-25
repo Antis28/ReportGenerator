@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppVisibility.cs" />
+    <Compile Include="MoveInTable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WorkWithWord.cs" />
   </ItemGroup>
