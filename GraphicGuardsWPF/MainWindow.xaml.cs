@@ -27,6 +27,7 @@ namespace GraphicGuardsWPF
         public MainWindow()
         {
             InitializeComponent();
+            dp_Date.SelectedDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(2);
         }
 
         private void button_Click(object sender, RoutedEventArgs e)
@@ -37,14 +38,14 @@ namespace GraphicGuardsWPF
 
         private void GenerateGraophic()
         {
-           
-            String supervisor = Helpers.GetSupervisorShort(cmb_supervisor.SelectedIndex);            
+
+            String supervisor = Helpers.GetSupervisorShort(cmb_supervisor.SelectedIndex);
             GraphicGenerator generator = null;
 
-            
+
             if (true)
             {
-                DateTime date = DateTime.Now;
+                DateTime date = dp_Date.SelectedDate.Value;
                 generator = new GraphicGenerator(AppVisibility.Visible, date);
             }
             else
@@ -52,10 +53,13 @@ namespace GraphicGuardsWPF
                 ;
             }
 
-
+            int guardNumber = SelectGuardContinue();
+            String suguardName1 = rb_Guard1.Content.ToString();
+            String suguardName2 = rb_Guard2.Content.ToString();
+            String suguardName3 = rb_Guard3.Content.ToString();
             try
             {
-                generator.Generate(supervisor);
+                generator.Generate(suguardName1, suguardName2, suguardName3,supervisor, guardNumber);
             }
             catch (FileLoadException ex)
             {
@@ -72,9 +76,27 @@ namespace GraphicGuardsWPF
                     generator.Dispose();
                 }
             }
-           
+
         }
 
-        
+        private int SelectGuardContinue()
+        {
+            int guardNumber = 0;
+            if (rb_Guard1.IsChecked.Value)
+            {
+                guardNumber = 1;
+            }
+            else if (rb_Guard2.IsChecked.Value)
+            {
+                guardNumber = 2;
+            }
+            else if (rb_Guard3.IsChecked.Value)
+            {
+                guardNumber = 3;
+            }
+
+            return guardNumber;
+        }
+
     }
 }

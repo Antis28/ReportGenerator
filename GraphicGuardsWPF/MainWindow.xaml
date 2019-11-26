@@ -5,18 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GraphicGuardsWPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="276.333" Width="343.5" FontSize="16">
+        Title="MainWindow" Height="340.333" Width="343.5" FontSize="16">
     <Grid>
-        <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Height="45" Margin="31,190,0,0" VerticalAlignment="Top" Width="265" Click="button_Click"/>
-        <RadioButton x:Name="rb_Guard1" Content="Guard1" HorizontalAlignment="Left" Margin="31,55,0,0" VerticalAlignment="Top" IsChecked="True"/>
-        <RadioButton x:Name="rb_Guard2" Content="Guard2" HorizontalAlignment="Left" Margin="117,55,0,0" VerticalAlignment="Top"/>
-        <RadioButton x:Name="rb_Guard3" Content="Guard3" HorizontalAlignment="Left" Margin="225,55,0,0" VerticalAlignment="Top" />
-        <Label x:Name="label" Content="Сторож, начинающий месяц" HorizontalAlignment="Left" Margin="31,24,0,0" VerticalAlignment="Top"/>
-        <DatePicker HorizontalAlignment="Left" Margin="31,111,0,0" VerticalAlignment="Top" Width="258"/>
-        <Label x:Name="label_Copy" Content="График сделать на дату:" HorizontalAlignment="Left" Margin="31,78,0,0" VerticalAlignment="Top"/>
-        <ComboBox x:Name="cmb_supervisor" HorizontalAlignment="Left" Margin="31,145,0,0" VerticalAlignment="Top" Width="265" SelectedIndex="0">
+        <Button x:Name="button" Content="Заполнить" HorizontalAlignment="Left" Height="45" Margin="31,254,0,0" VerticalAlignment="Top" Width="265" Click="button_Click"/>
+        <RadioButton x:Name="rb_Guard1" Content="Кувшинов А.А." HorizontalAlignment="Left" Margin="31,55,0,0" VerticalAlignment="Top" IsChecked="True"/>
+        <RadioButton x:Name="rb_Guard2" Content="Смоляков О.А." HorizontalAlignment="Left" Margin="31,80,0,0" VerticalAlignment="Top"/>
+        <RadioButton x:Name="rb_Guard3" Content="Попов А.С." HorizontalAlignment="Left" Margin="31,108,0,0" VerticalAlignment="Top" />
+        <Label x:Name="label" Content="С какого сторожа начнется месяц?" HorizontalAlignment="Left" Margin="31,24,0,0" VerticalAlignment="Top"/>
+        <DatePicker x:Name="dp_Date" HorizontalAlignment="Left" Margin="31,166,0,0" VerticalAlignment="Top" Width="258"/>
+        <Label x:Name="label_Copy" Content="На какую дату делать график?" HorizontalAlignment="Left" Margin="31,133,0,0" VerticalAlignment="Top"/>
+        <ComboBox x:Name="cmb_supervisor" HorizontalAlignment="Left" Margin="31,217,0,0" VerticalAlignment="Top" Width="265" SelectedIndex="0">
             <ComboBoxItem Content="Начальник управления"/>
             <ComboBoxItem Content="И.о. начальника"/>
         </ComboBox>
+        <Label x:Name="label_Copy1" Content="Кто подписывает график?" HorizontalAlignment="Left" Margin="31,186,0,0" VerticalAlignment="Top"/>
     </Grid>
 </Window>

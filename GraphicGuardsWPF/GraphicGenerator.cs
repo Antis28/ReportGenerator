@@ -13,9 +13,9 @@ namespace GraphicGuardsWPF
     class GraphicGenerator
     {
         readonly String template31Path = Environment.CurrentDirectory + @"\Template\01_График работы_31.dot";
-        readonly String template30Path = Environment.CurrentDirectory + @"\Template\01_График работы_30.dot";
-        readonly String template29Path = Environment.CurrentDirectory + @"\Template\01_График работы_29.dot";
-        readonly String template28Path = Environment.CurrentDirectory + @"\Template\01_График работы_28.dot";
+        readonly String template30Path = Environment.CurrentDirectory + @"\Template\02_График работы_30.dot";
+        readonly String template29Path = Environment.CurrentDirectory + @"\Template\03_График работы_29.dot";
+        readonly String template28Path = Environment.CurrentDirectory + @"\Template\04_График работы_28.dot";
         readonly WorkWithWord word = null;
 
         const String dateBookMark = "MONTH";            // Месяц, на который делается график
@@ -24,35 +24,90 @@ namespace GraphicGuardsWPF
         const String guard1 = "D1";            // начало дежурств сторожа
         const String guard2 = "D2";            // начало дежурств сторожа
         const String guard3 = "D3";            // начало дежурств сторожа
+        const String guardName1 = "Guard_1";            // имя сторожа
+        const String guardName2 = "Guard_2";            // имя сторожа
+        const String guardName3 = "Guard_3";            // имя сторожа
+
+
         readonly DateTime curentDate;
 
         public GraphicGenerator(AppVisibility visibility, DateTime date)
         {
             curentDate = date;
+            String path = SelectTemplateMonth(date);
 
             word = new WorkWithWord();
-            if (File.Exists(template31Path))
-                word.CreateNewDoc(template31Path, visibility);
+            if (File.Exists(path))
+                word.CreateNewDoc(path, visibility);
             else
-                throw new FileLoadException("Шаблон не найден по адресу: " + template31Path);
+                throw new FileLoadException("Шаблон не найден по адресу: " + path);
         }
-        public void Generate(String supervisor)
-        {
-            
 
+        private string SelectTemplateMonth(DateTime date)
+        {
+            string path;
+            switch (date.Month)
+            {
+                case 1:
+                case 3:
+                case 5:
+                case 7:
+                case 8:
+                case 10:
+                case 12:
+                    path = template31Path;
+                    break;
+                case 4:
+                case 6:
+                case 9:
+                case 11:
+                    path = template30Path;
+                    break;
+                case 2:
+                    if (date.Year % 4 == 0)
+                    {
+                        path = template29Path;
+                    }
+                    else
+                        path = template28Path;
+                    break;
+                default:
+                    path = "Шаблон не присвоен";
+                    break;
+            }
+
+            return path;
+        }
+
+        public void Generate(String suguardName1, String suguardName2, String suguardName3, String supervisor, int guardNumber)
+        {
             FillSuperVisor(supervisor);
             FillMonth();
             FillWeekDay();
-            FillGuards();
+            FillGuardNames(suguardName1, suguardName2, suguardName3);
+            FillGuards(guardNumber);
+            
             SaveToFile();
         }
 
-        private void FillGuards( int guardNumber = 1)
+        private void FillGuardNames(string name1, string name2, string name3)
+        {
+            Word.Bookmark bookmark = word.FindBookMark(guardName1);
+            bookmark.Range.Text = name1;
+
+            bookmark = word.FindBookMark(guardName2);
+            bookmark.Range.Text = name2;
+
+            bookmark = word.FindBookMark(guardName3);
+            bookmark.Range.Text = name3;
+        }
+
+            private void FillGuards(int guardNumber = 1)
         {
             GuardManager manager = new GuardManager(curentDate);
             manager.SetGurdContinueDuty(guardNumber);
             manager.PlanGraphic();
-            
+
             FillGuard1(manager);
             FillGuard2(manager);
             FillGuard3(manager);
@@ -63,7 +118,7 @@ namespace GraphicGuardsWPF
         {
             Word.Bookmark bookmark = word.FindBookMark(guard1);
             Guard guard = manager.GetGuard1();
-            bookmark.Select();            
+            bookmark.Select();
             FillGuard(guard, bookmark.Range);
         }
         private void FillGuard2(GuardManager manager)
@@ -91,7 +146,7 @@ namespace GraphicGuardsWPF
                 {
                     wordRange.Text = "";
                 }
-                else wordRange.Text = item.Value.ToString(); 
+                else wordRange.Text = item.Value.ToString();
                 wordRange = word.MoveCellRight();
             }
             wordRange.Text = hourCount.ToString();
