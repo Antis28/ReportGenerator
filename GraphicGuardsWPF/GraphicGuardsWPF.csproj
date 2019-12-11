@@ -53,6 +53,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Win_GuardsEdit.xaml.cs">
+      <DependentUpon>Win_GuardsEdit.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -68,6 +71,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Win_GuardsEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -108,6 +115,10 @@
     <ProjectReference Include="..\WordManager\WordManager.csproj">
       <Project>{77e8804e-4859-4c17-99f4-3a187eea7f59}</Project>
       <Name>WordManager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\XmlManager\XmlManager.csproj">
+      <Project>{87f9bd66-9702-4ff9-97b7-bf01eb9a9459}</Project>
+      <Name>XmlManager</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

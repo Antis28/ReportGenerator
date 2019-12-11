@@ -1,0 +1,42 @@
+﻿<Window x:Class="GraphicGuardsWPF.Win_GuardsEdit"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GraphicGuardsWPF"
+        mc:Ignorable="d"
+        Title="Win_GuardsEdit" Height="322.689" Width="441.876" FontSize="16">
+    <Grid Name="gridGuardsDetails" Margin="2, 7, 2 , 2">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <TextBlock Margin="7" Grid.Row="0">Сторож 1:</TextBlock>
+        <TextBox x:Name="Guard1" Grid.Row="0" Grid.Column="1" Margin="7" Width="200" Text="{Binding Path=Guard1, TargetNullValue=[Поле не определено]}"></TextBox>
+        <TextBlock Margin="7" Grid.Row="1">Сторож 2:</TextBlock>
+        <TextBox x:Name="Guard2" Grid.Row="1" Grid.Column="1" Margin="7" Width="200" Text="{Binding Path=Guard2, TargetNullValue=[Поле не определено]}"></TextBox>
+        <TextBlock Margin="7" Grid.Row="2">Сторож 3:</TextBlock>
+        <TextBox x:Name="Guard3" Grid.Row="2" Grid.Column="1" Margin="7" Width="200" Text="{Binding Path=Guard3, TargetNullValue=[Поле не определено]}"></TextBox>
+        <TextBlock Margin="7" Grid.Row="3">Начальник управления:</TextBlock>
+        <TextBox x:Name="Director" Grid.Row="3" Grid.Column="1" Margin="7" Width="200" Text="{Binding Path=Director, TargetNullValue=[Поле не определено]}"></TextBox>
+        <TextBlock Margin="7" Grid.Row="4">Первый заместитель:</TextBlock>
+        <TextBox x:Name="Deputy_chief" Grid.Row="4" Grid.Column="1" Margin="7" Width="200" Text="{Binding Path=Deputy_chief, TargetNullValue=[Поле не определено]}"></TextBox>
+       
+        <TextBlock Margin="7" Grid.Row="5">Начальник отдела:</TextBlock>
+        <TextBox x:Name="Superior" Grid.Row="5" Grid.Column="1" Margin="7" Width="200" Text="{Binding Path=Superior, TargetNullValue=[Поле не определено]}"></TextBox>
+
+        <Button  Grid.Row="7" Grid.Column="1"  Content="Сохранить" Margin="84,5,52,5" Click="Button_Click"  />
+
+
+    </Grid>
+</Window>

@@ -16,20 +16,27 @@ namespace GraphicGuards
             String guard33 = "Сторож 3";
 
             DateTime now = DateTime.Now;
-            DateTime firstDay = new DateTime(now.Year, now.Month, 1);
-            DateTime last = firstDay.AddMonths(1).AddDays(-1);
+
 
             //Case4(guard11, guard22, guard33, firstDay, last);
 
-            
+
             int guardNameLength = guard11.Length + 1;
 
-            PrintHeader(guardNameLength, firstDay, last);            
+            Header(now, guardNameLength);
+            Case5(now, 3);
+            
+            Header(now.AddMonths(1), guardNameLength);
+            Case5(now.AddMonths(1), 3);
 
-            GuardManager manager = new GuardManager(now);
-            manager.SetGurdContinueDuty(3);
-            manager.PlanGraphic();
-            manager.PrintGraphic();
+            Header(now.AddMonths(2), guardNameLength);
+            Case5(now.AddMonths(2), 1);
+
+            Header(now.AddMonths(3), guardNameLength);
+            Case5(now.AddMonths(3), 2);
+
+            Header(now.AddMonths(4), guardNameLength);
+            Case5(now.AddMonths(4), 1);
 
             Wait();
 
@@ -44,8 +51,23 @@ namespace GraphicGuards
             Case3(guard11, guard22, guard33, firstDay, last);
             */
         }
+        private static void Header(DateTime now, int guardNameLength)
+        {
+            DateTime firstDay = new DateTime(now.Year, now.Month, 1);
+            DateTime last = firstDay.AddMonths(1).AddDays(-1);
+            PrintHeader(guardNameLength, firstDay, last);
+        }
 
-        
+
+
+        private static void Case5(DateTime now, int guardNumber)
+        {
+            GuardManager manager = new GuardManager(now);
+            manager.SetGurdContinueDuty(guardNumber);
+            manager.PlanGraphic();
+            manager.PrintGraphic();
+        }
+
 
         private static void Case4(string guard11, string guard22, string guard33, DateTime firstDay, DateTime last)
         {

@@ -89,6 +89,16 @@ namespace GraphicGuardsWPF
             
             SaveToFile();
         }
+        public static String GetSaveCatalog()
+        {
+            String folderName = "График дежурств сторожей";
+
+            // путь для сохранения
+            String newFolderPath = Environment.CurrentDirectory;    // текущй каталог exe файла
+            newFolderPath = Path.Combine(newFolderPath, @"..\");    // поднятся на уровень выше
+            newFolderPath = Path.Combine(newFolderPath, folderName);
+            return newFolderPath;
+        }
 
         private void FillGuardNames(string name1, string name2, string name3)
         {
@@ -183,21 +193,14 @@ namespace GraphicGuardsWPF
         {
             Word.Bookmark bookmark = word.FindBookMark(positionBookMark);
             bookmark.Range.Text = supervisor;
-        }
+        }        
 
         private void SaveToFile()
         {
-            String folderName = "График дежурств сторожей";
+            String newFolderPath = GetSaveCatalog();
+           System.IO.Directory.CreateDirectory(newFolderPath);
 
-            // путь для сохранения
-            String newFolderPath = Environment.CurrentDirectory;    // текущй каталог exe файла
-            newFolderPath = Path.Combine(newFolderPath, @"..\");    // поднятся на уровень выше
-            newFolderPath = Path.Combine(newFolderPath, folderName);
-
-
-            System.IO.Directory.CreateDirectory(newFolderPath);
-
-            String fileName = curentDate.ToString("yyyy_MMMM", CultureInfo.CurrentCulture);
+            String fileName = curentDate.ToString("yyyy_MM_MMMM", CultureInfo.CurrentCulture);
             String fileExtension = ".doc";
             String fullPath = Path.Combine(newFolderPath, fileName + fileExtension);
 

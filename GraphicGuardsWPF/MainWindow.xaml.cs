@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using GraphicGuards;
 using Utils;
 using WordManager;
+using XmlManager;
 using Word = Microsoft.Office.Interop.Word;
 
 namespace GraphicGuardsWPF
@@ -24,24 +25,29 @@ namespace GraphicGuardsWPF
     /// </summary>
     public partial class MainWindow : Window
     {
+        public SettingManeger settingMeneger;
+        public Settings settings;
         public MainWindow()
         {
             InitializeComponent();
             dp_Date.SelectedDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(2);
+
+            settingMeneger = new SettingManeger(Environment.CurrentDirectory + @"\Settings.xml");
+            settings = settingMeneger.Load();
+
+            gridGuards.DataContext = settings;
+            
         }
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
-
             GenerateGraophic();
         }
 
         private void GenerateGraophic()
         {
-
             String supervisor = Helpers.GetSupervisorShort(cmb_supervisor.SelectedIndex);
             GraphicGenerator generator = null;
-
 
             if (true)
             {
@@ -59,7 +65,7 @@ namespace GraphicGuardsWPF
             String suguardName3 = rb_Guard3.Content.ToString();
             try
             {
-                generator.Generate(suguardName1, suguardName2, suguardName3,supervisor, guardNumber);
+                generator.Generate(suguardName1, suguardName2, suguardName3, supervisor, guardNumber);
             }
             catch (FileLoadException ex)
             {
@@ -98,5 +104,23 @@ namespace GraphicGuardsWPF
             return guardNumber;
         }
 
+        private void btn_openDirectory_Click(object sender, RoutedEventArgs e)
+        {
+            String newFolderPath = GraphicGenerator.GetSaveCatalog();
+
+            System.Diagnostics.Process Proc = new System.Diagnostics.Process();
+            Proc.StartInfo.FileName = "explorer";
+            Proc.StartInfo.Arguments = newFolderPath;
+            Proc.Start();
+            Proc.Close();
+        }
+
+        private void btn_editGuards_Click(object sender, RoutedEventArgs e)
+        {
+            Win_GuardsEdit win_GuardsEdit = new Win_GuardsEdit();
+            win_GuardsEdit.Owner = this;
+            win_GuardsEdit.Show();
+            win_GuardsEdit.gridGuardsDetails.DataContext = settings;
+        }
     }
 }
