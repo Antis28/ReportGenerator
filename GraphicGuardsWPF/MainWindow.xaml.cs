@@ -25,47 +25,46 @@ namespace GraphicGuardsWPF
     /// </summary>
     public partial class MainWindow : Window
     {
-        public SettingManeger settingMeneger;
+
         public Settings settings;
         public MainWindow()
         {
             InitializeComponent();
             dp_Date.SelectedDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(2);
 
-            settingMeneger = new SettingManeger(Environment.CurrentDirectory + @"\Settings.xml");
-            settings = settingMeneger.Load();
+            settings = SettingManeger.Load();
 
             gridGuards.DataContext = settings;
-            
+            //UpdateSupervisorList();
+        }
+
+        private void UpdateSupervisorList()
+        {
+            var items = cmb_supervisor.Items;
+            items.Clear();
+            items.Add(settings.Director);
+            items.Add(settings.Deputy_chief);
+            cmb_supervisor.SelectedIndex = 0;
         }
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
+            settings = SettingManeger.Load();
             GenerateGraophic();
         }
 
         private void GenerateGraophic()
         {
-            String supervisor = Helpers.GetSupervisorShort(cmb_supervisor.SelectedIndex);
+            settings.Supervisor = Helpers.GetSupervisorShort(cmb_supervisor.SelectedIndex, settings);
             GraphicGenerator generator = null;
 
-            if (true)
-            {
-                DateTime date = dp_Date.SelectedDate.Value;
-                generator = new GraphicGenerator(AppVisibility.Visible, date);
-            }
-            else
-            {
-                ;
-            }
+            DateTime date = dp_Date.SelectedDate.Value;
+            generator = new GraphicGenerator(AppVisibility.Visible, date);
 
             int guardNumber = SelectGuardContinue();
-            String suguardName1 = rb_Guard1.Content.ToString();
-            String suguardName2 = rb_Guard2.Content.ToString();
-            String suguardName3 = rb_Guard3.Content.ToString();
             try
             {
-                generator.Generate(suguardName1, suguardName2, suguardName3, supervisor, guardNumber);
+                generator.Generate(settings, guardNumber);
             }
             catch (FileLoadException ex)
             {
@@ -117,10 +116,14 @@ namespace GraphicGuardsWPF
 
         private void btn_editGuards_Click(object sender, RoutedEventArgs e)
         {
-            Win_GuardsEdit win_GuardsEdit = new Win_GuardsEdit();
-            win_GuardsEdit.Owner = this;
-            win_GuardsEdit.Show();
+            settings = SettingManeger.Load();
+            Win_GuardsEdit win_GuardsEdit = new Win_GuardsEdit
+            {
+                Owner = this
+            };
             win_GuardsEdit.gridGuardsDetails.DataContext = settings;
+            win_GuardsEdit.gridGuardsDetails.UpdateLayout();
+            win_GuardsEdit.Show();
         }
     }
 }

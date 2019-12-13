@@ -7,6 +7,7 @@ using Utilities;
 using WordManager;
 using GraphicGenerator;
 using System.Collections.Generic;
+using XmlManager;
 
 namespace GraphicGuardsWPF
 {
@@ -24,11 +25,18 @@ namespace GraphicGuardsWPF
         const String guard1 = "D1";            // начало дежурств сторожа
         const String guard2 = "D2";            // начало дежурств сторожа
         const String guard3 = "D3";            // начало дежурств сторожа
+        
         const String guardName1 = "Guard_1";            // имя сторожа
         const String guardName2 = "Guard_2";            // имя сторожа
         const String guardName3 = "Guard_3";            // имя сторожа
 
+        const String guardName10 = "Guard_10";            // имя сторожа
+        const String guardName20 = "Guard_20";            // имя сторожа
+        const String guardName30 = "Guard_30";            // имя сторожа
+        
+        const String superior = "superior";            // Начальник отдела
 
+        
         readonly DateTime curentDate;
 
         public GraphicGenerator(AppVisibility visibility, DateTime date)
@@ -79,16 +87,24 @@ namespace GraphicGuardsWPF
             return path;
         }
 
-        public void Generate(String suguardName1, String suguardName2, String suguardName3, String supervisor, int guardNumber)
+        public void Generate(Settings settings, int guardStartNumber)
         {
-            FillSuperVisor(supervisor);
+            FillSuperVisor(settings.Supervisor);
             FillMonth();
             FillWeekDay();
-            FillGuardNames(suguardName1, suguardName2, suguardName3);
-            FillGuards(guardNumber);
+            FillGuardNames(settings.Guard1, settings.Guard2, settings.Guard3);
+            Fillsuperior(settings.Superior);
+            FillGuards(guardStartNumber);
             
             SaveToFile();
         }
+
+        private void Fillsuperior(string superiorName)
+        {
+            Word.Bookmark bookmark = word.FindBookMark(superior);
+            bookmark.Range.Text = superiorName;
+        }
+
         public static String GetSaveCatalog()
         {
             String folderName = "График дежурств сторожей";
@@ -109,6 +125,15 @@ namespace GraphicGuardsWPF
             bookmark.Range.Text = name2;
 
             bookmark = word.FindBookMark(guardName3);
+            bookmark.Range.Text = name3;
+
+            bookmark = word.FindBookMark(guardName10);
+            bookmark.Range.Text = name1;
+
+            bookmark = word.FindBookMark(guardName20);
+            bookmark.Range.Text = name2;
+
+            bookmark = word.FindBookMark(guardName30);
             bookmark.Range.Text = name3;
         }
 

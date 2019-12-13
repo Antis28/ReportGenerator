@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="340.333" Width="343.5" FontSize="16">
     <Grid>
-        <Button x:Name="button" Content="Заполнить" HorizontalAlignment="Left" Height="45" Margin="31,254,0,0" VerticalAlignment="Top" Width="126" Click="button_Click"/>
+        <Button x:Name="btn_FillTemplate" Content="Заполнить" HorizontalAlignment="Left" Height="45" Margin="31,254,0,0" VerticalAlignment="Top" Width="126" Click="button_Click"/>
         <Grid Name="gridGuards">
             <RadioButton x:Name="rb_Guard1" Content="{Binding Path=Guard1, TargetNullValue=[Поле не определено]}" HorizontalAlignment="Left" Margin="31,55,0,0" VerticalAlignment="Top" IsChecked="True"/>
             <RadioButton x:Name="rb_Guard2" Content="{Binding Path=Guard2, TargetNullValue=[Поле не определено]}" HorizontalAlignment="Left" Margin="31,80,0,0" VerticalAlignment="Top"/>
@@ -20,7 +20,7 @@
             <ComboBoxItem Content="Начальник управления"/>
             <ComboBoxItem Content="И.о. начальника"/>
         </ComboBox>
-        <Label x:Name="label_Copy1" Content="Кто подписывает график?" HorizontalAlignment="Left" Margin="31,186,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lbl_WhoSupervisor" Content="Кто подписывает график?" HorizontalAlignment="Left" Margin="31,186,0,0" VerticalAlignment="Top"/>
         <Button x:Name="btn_openDirectory" Content="Открыть каталог" HorizontalAlignment="Left" Height="45" Margin="174,254,0,0" VerticalAlignment="Top" Width="142" Click="btn_openDirectory_Click" />
         <Button x:Name="btn_editGuards" Content="Редактировать" HorizontalAlignment="Left" Height="24" Margin="93,0,0,0" VerticalAlignment="Top" Width="125" Click="btn_editGuards_Click"/>
     </Grid>

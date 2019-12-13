@@ -1,13 +1,14 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Xml.Serialization;
 
 namespace XmlManager
 {
     [XmlRoot("Root")]
-    public class Settings : IEquatable<Settings>
+    public class Settings : IEquatable<Settings>, INotifyPropertyChanged
     {
-        
-        private string guard1 = "guard1";       
+
+        private string guard1 = "guard1";
         private string guard2 = "guard2";
         private string guard3 = "guard3";
         private string director = "director";
@@ -22,13 +23,38 @@ namespace XmlManager
         [XmlElement]
         public string Guard3 { get => guard3; set => guard3 = value; }
         [XmlElement]
-        public string Director { get => director; set => director = value; }
+        public string Director
+        {
+            get => director;
+            set
+            {
+                director = value;
+                RaisePropertyChanged("Director");
+            }
+        }
         [XmlElement]
-        public string Deputy_chief { get => deputy_chief; set => deputy_chief = value; }
+        public string Deputy_chief
+        {
+            get => deputy_chief;
+            set
+            {
+                deputy_chief = value;
+                RaisePropertyChanged("Deputy_chief");
+            }
+        }
         [XmlElement]
         public string Supervisor { get => supervisor; set => supervisor = value; }
         [XmlElement]
         public string Superior { get => superior; set => superior = value; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        // Для удобства обернем событие в метод с единственным параметром - имя изменяемого свойства
+        public void RaisePropertyChanged(string propertyName)
+        {
+            // Если кто-то на него подписан, то вызывем его
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
 
         #region сравнение в методе Contains
         public bool Equals(Settings other)
@@ -55,7 +81,7 @@ namespace XmlManager
             return 0;
         }
 
-        public static bool operator == (Settings person_1, Settings person_2)
+        public static bool operator ==(Settings person_1, Settings person_2)
         {
             if (((object)person_1) == null || ((object)person_2) == null)
                 return Object.Equals(person_1, person_2);
@@ -63,7 +89,7 @@ namespace XmlManager
             return person_1.Equals(person_2);
         }
 
-        public static bool operator != (Settings person_1, Settings person_2)
+        public static bool operator !=(Settings person_1, Settings person_2)
         {
             if (((object)person_1) == null || ((object)person_2) == null)
                 return !Object.Equals(person_1, person_2);

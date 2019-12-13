@@ -9,14 +9,10 @@ namespace XmlManager
 {
     public class SettingManeger
     {
-        string path;
+        static string path = Environment.CurrentDirectory + @"\Settings.xml";
 
-        public SettingManeger(string path)
-        {
-            this.path = path;
-        }
 
-        public Settings Load()
+        public static Settings Load()
         {
             if (!File.Exists(path))
                 throw new IOException("File not found");
@@ -33,7 +29,7 @@ namespace XmlManager
             }
             return result;
         }
-        public void Save(Settings setting)
+        public static void Save(Settings setting)
         {
             using (TextWriter stream = new StreamWriter(path, false, Encoding.UTF8))
             {

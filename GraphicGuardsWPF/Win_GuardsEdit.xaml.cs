@@ -37,7 +37,7 @@ namespace GraphicGuardsWPF
                 Deputy_chief = this.Deputy_chief.Text,
                 Superior = this.Superior.Text
             };
-            win.settingMeneger.Save(settings);
+            SettingManeger.Save(settings);
             Close();
         }
     }
