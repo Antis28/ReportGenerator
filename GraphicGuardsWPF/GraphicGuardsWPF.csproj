@@ -53,8 +53,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="MainViewModel.cs" />
+    <Compile Include="RelayCommand.cs" />
     <Compile Include="Win_GuardsEdit.xaml.cs">
       <DependentUpon>Win_GuardsEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Win_HolidaysEdit.xaml.cs">
+      <DependentUpon>Win_HolidaysEdit.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -72,6 +77,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Win_GuardsEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Win_HolidaysEdit.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

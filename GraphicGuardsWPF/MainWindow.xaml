@@ -22,6 +22,8 @@
         </ComboBox>
         <Label x:Name="lbl_WhoSupervisor" Content="Кто подписывает график?" HorizontalAlignment="Left" Margin="31,186,0,0" VerticalAlignment="Top"/>
         <Button x:Name="btn_openDirectory" Content="Открыть каталог" HorizontalAlignment="Left" Height="45" Margin="174,254,0,0" VerticalAlignment="Top" Width="142" Click="btn_openDirectory_Click" />
-        <Button x:Name="btn_editGuards" Content="Редактировать" HorizontalAlignment="Left" Height="24" Margin="93,0,0,0" VerticalAlignment="Top" Width="125" Click="btn_editGuards_Click"/>
+        <Button x:Name="btn_editGuards" Content="Редактировать" HorizontalAlignment="Left" Height="24" Margin="10,0,0,0" VerticalAlignment="Top" Width="125" Click="btn_editGuards_Click"/>
+        <Button x:Name="btn_editHolidays" Content="Редактировать" HorizontalAlignment="Left" Height="24" Margin="191,0,0,0" VerticalAlignment="Top" Width="125" Click="btn_editHolidays_Click"/>
+
     </Grid>
 </Window>

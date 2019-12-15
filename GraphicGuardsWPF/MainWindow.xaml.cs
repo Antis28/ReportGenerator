@@ -125,5 +125,15 @@ namespace GraphicGuardsWPF
             win_GuardsEdit.gridGuardsDetails.UpdateLayout();
             win_GuardsEdit.Show();
         }
+
+        private void btn_editHolidays_Click(object sender, RoutedEventArgs e)
+        {
+            settings = SettingManeger.Load();
+            Win_HolidaysEdit win_GuardsEdit = new Win_HolidaysEdit()
+            {
+                Owner = this
+            };
+            win_GuardsEdit.Show();
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Xml.Serialization;
 
@@ -15,6 +16,8 @@ namespace XmlManager
         private string deputy_chief = "deputy_chief";
         private string supervisor = "supervisor";
         private string superior = "superior";
+
+        private List<string> holidays;
 
         [XmlElement]
         public string Guard1 { get => guard1; set => guard1 = value; }
@@ -46,6 +49,9 @@ namespace XmlManager
         public string Supervisor { get => supervisor; set => supervisor = value; }
         [XmlElement]
         public string Superior { get => superior; set => superior = value; }
+        [XmlArray("Holidays")]
+        [XmlArrayItem("Date")]
+        public List<string> Holidays { get => holidays; set => holidays = value; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
