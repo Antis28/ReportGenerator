@@ -42,7 +42,7 @@ namespace GraphicGuardsWPF
         public GraphicGenerator(AppVisibility visibility, DateTime date)
         {
             curentDate = date;
-            String path = SelectTemplateMonth(date);
+            String path = SelectTemplateMonth();
 
             word = new WorkWithWord();
             if (File.Exists(path))
@@ -51,10 +51,10 @@ namespace GraphicGuardsWPF
                 throw new FileLoadException("Шаблон не найден по адресу: " + path);
         }
 
-        private string SelectTemplateMonth(DateTime date)
+        private string SelectTemplateMonth()
         {
             string path;
-            switch (date.Month)
+            switch (curentDate.Month)
             {
                 case 1:
                 case 3:
@@ -72,7 +72,7 @@ namespace GraphicGuardsWPF
                     path = template30Path;
                     break;
                 case 2:
-                    if (date.Year % 4 == 0)
+                    if (curentDate.Year % 4 == 0)
                     {
                         path = template29Path;
                     }
