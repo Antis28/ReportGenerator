@@ -9,32 +9,41 @@ namespace GuardsConsole
     {
         public static void Main(string[] args)
         {
-            var holidays = HolidaysReader.Read();
+            var holidays = HolidaysReader.ReadHolidays();
             SettingsHolidays settings = new SettingsHolidays { Holidays = holidays };
-            
+
             JsonManager.WriteProductTest(settings);
         }
     }
 
     public static class HolidaysReader
     {
-        public static List<DateTime> Read()
+        public static List<DateTime> ReadHolidays()
+        {
+            return Read(@"Holidays.txt");
+        }
+
+        private static List<DateTime> Read(string fileName)
         {
             var holidays = new List<DateTime>();
-            var path = Environment.CurrentDirectory + @"\Holidays.txt";
+            var path = Environment.CurrentDirectory + @"\" + fileName;
             using (StreamReader reader = new StreamReader(path))
             {
                 string line;
                 while ((line = reader.ReadLine()) != null)
                 {
-                    var result = DateTime.MaxValue;
+                    DateTime result;
                     DateTime.TryParse(line, out result);
-                    if (result != DateTime.MaxValue)
+                    if (result != DateTime.MinValue)
                     {
                         holidays.Add(result);
+                        // Console.WriteLine(line);
                     }
-                    
-                    Console.WriteLine(line);
+                    else
+                    {
+                        Console.WriteLine("Error: " + line);
+                    }
+
                 }
             }
 
@@ -63,6 +72,7 @@ namespace GuardsConsole
         /// Branch manager
         /// </summary>
         public string branchManager = "Начальник управления(филиала)";
+
         /// <summary>
         /// Начальник отдела
         /// Department head
@@ -73,7 +83,6 @@ namespace GuardsConsole
     [JsonObject(MemberSerialization.OptIn)]
     public class SettingsHolidays
     {
-        [JsonProperty]
-        public List<DateTime> Holidays { get; set; }
+        [JsonProperty] public List<DateTime> Holidays { get; set; }
     }
 }
