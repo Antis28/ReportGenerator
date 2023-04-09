@@ -8,8 +8,12 @@ namespace Utils
 {
     public static class Helpers
     {
-       
-
+        /// <summary>
+        /// Получить ФИО начальника
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="settings"></param>
+        /// <returns></returns>
         public static string GetSupervisorFull(int index, Settings settings)
         {
             String position = String.Empty;

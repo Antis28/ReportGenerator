@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Word = Microsoft.Office.Interop.Word;
 using System.Reflection;
+using Word = Microsoft.Office.Interop.Word;
 
 
 namespace WordManager

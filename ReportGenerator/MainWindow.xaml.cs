@@ -10,6 +10,7 @@ using System.Globalization;
 using Reports;
 using WordManager;
 using Utils;
+using XmlManager;
 
 namespace ReportGenerator
 {
@@ -40,7 +41,10 @@ namespace ReportGenerator
         private void GenThur()
         {
             int photoCount = int.Parse(tb_photoCount.Text, CultureInfo.CurrentCulture);
-            String supervisor = Helpers.GetSupervisorFull(cmb_supervisor.SelectedIndex);
+
+            Settings settings = SettingManeger.Load();
+
+            String supervisor = Helpers.GetSupervisorFull(cmb_supervisor.SelectedIndex, settings);
             String works = CombineListWorks();
             ReportThursday report = null;
 

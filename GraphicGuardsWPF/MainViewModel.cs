@@ -1,11 +1,6 @@
-﻿using Microsoft.Office.Interop.Word;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 using System.Windows.Input;
-using XmlManager;
 
 namespace GraphicGuardsWPF
 {

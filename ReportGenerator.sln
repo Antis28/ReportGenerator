@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphicGuardsWPF", "Graphic
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XmlManager", "XmlManager\XmlManager.csproj", "{87F9BD66-9702-4FF9-97B7-BF01EB9A9459}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReportGenerator_3.0", "ReportGenerator_3.0\ReportGenerator_3.0.csproj", "{7E22A4B6-37E5-47CC-8B4F-0F9798C871DA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{87F9BD66-9702-4FF9-97B7-BF01EB9A9459}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{87F9BD66-9702-4FF9-97B7-BF01EB9A9459}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{87F9BD66-9702-4FF9-97B7-BF01EB9A9459}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E22A4B6-37E5-47CC-8B4F-0F9798C871DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E22A4B6-37E5-47CC-8B4F-0F9798C871DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E22A4B6-37E5-47CC-8B4F-0F9798C871DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E22A4B6-37E5-47CC-8B4F-0F9798C871DA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

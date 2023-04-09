@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Xml.Serialization;
 
@@ -11,11 +9,10 @@ namespace XmlManager
     {
         static string path = Environment.CurrentDirectory + @"\Settings.xml";
 
-
         public static Settings Load()
         {
             if (!File.Exists(path))
-                throw new IOException("File not found");
+                throw new IOException("Settings - file not found!");
 
             Settings result = null;
             using (TextReader Stream = new StreamReader(path, Encoding.UTF8))
@@ -25,9 +22,26 @@ namespace XmlManager
                 Stream.Close();
 
                 if (result == null)
-                    throw new Exception("File not Deserialize");
+                    throw new Exception("File not Deserialize.");
             }
             return result;
+        }
+        public static Settings LoadOrCreateNew()
+        {
+            if (File.Exists(path))
+                return Load();
+            Settings settings = new Settings()
+            {
+                Guard1 = "Не назначено",
+                Guard2 = "Не назначено",
+                Guard3 = "Не назначено",
+                Supervisor = "Не назначено",
+                Director = "Не назначено",
+                Deputy_chief = "Не назначено",
+                Superior = "Не назначено",
+            };
+            Save(settings);
+            return settings;
         }
         public static void Save(Settings setting)
         {
